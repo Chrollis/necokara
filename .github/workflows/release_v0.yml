@@ -1,0 +1,94 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v0.*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: build
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: necokara-node-modules-v0
+
+      - name: Cache download
+        uses: actions/cache@v4
+        with:
+          path: download
+          key: necokara-download-v0
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Pillow (build-time image generation)
+        run: python -m pip install Pillow
+
+      - name: Create minimal runtime (python embed + ffmpeg + mini)
+        run: python python/scripts/create-env.py
+
+      - name: Build NSIS installer
+        run: npm run build-nsis
+
+      - name: Rename installer
+        shell: pwsh
+        run: |
+          $file = Get-ChildItem 'src-tauri/target/release/bundle/nsis/necokara_*_x64-setup.exe' | Select-Object -First 1
+          if (-not $file) {
+            Write-Error 'NSIS installer not found'
+            exit 1
+          }
+          $newName = $file.Name -replace 'x64-setup\.exe$', 'x64-setup.exe'
+          Move-Item -Force $file.FullName (Join-Path $file.DirectoryName $newName)
+          Write-Output "artifact=$newName"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: necokara-installer
+          path: src-tauri/target/release/bundle/nsis/necokara_*_x64-setup.exe
+
+  release:
+    name: Publish Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Necokara ${{ github.ref_name }}
+          body: |
+            This release was generated automatically by GitHub Actions.
+            Release notes will be added manually.
+          files: |
+            artifacts/necokara-installer/*.exe
