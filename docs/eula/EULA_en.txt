@@ -1,0 +1,70 @@
+NECOKARA END USER LICENSE AGREEMENT (EULA)
+
+IMPORTANT: Before installing, copying, or using Necokara software or related documentation, please read and agree to this agreement. By installing, copying, or using the Software, you expressly agree to be bound by this agreement. If you have any questions, please contact the official channel of the Software Owner.
+
+1. Definitions
+- "Agreement" means this Necokara End User License Agreement (EULA) and any supplemental terms applicable to the Software.
+- "Documentation" means installer scripts, online documentation, or electronic documentation relating to the Software or any part of it (whether included with the Software or provided externally).
+- "Open Source License" means an open source license, such as Necokara License 1.0, that permits the use, modification, or distribution of the relevant software.
+- "Intellectual Property" means all copyrights, trademarks, trade secrets, patents, and all related, similar, or other intellectual property rights recognized in any jurisdiction worldwide, including all applications and registrations relating to them.
+- "Software" means the Necokara software that you download, install, or use, including updates and related documentation.
+
+2. Grant of License
+Subject to the terms and conditions of this Agreement, the Software Owner hereby grants you a personal, non-exclusive, revocable, non-transferable limited license:
+- to install, copy, and use the Software only on Windows computers that meet the Software's system requirements;
+- to use the Software only for your personal or internal business purposes, including creating lyric subtitles, karaoke videos, and similar content;
+- to use and refer to the Documentation (if any) provided with the Software only in connection with the Software.
+
+3. Restrictions
+Except for the limited license expressly granted in this Agreement, you have no other rights in the Software, whether express, implied, or arising by estoppel or otherwise. For clarity, the following acts are expressly prohibited:
+- modifying or creating derivative works based on the Software or Documentation;
+- distributing, publishing, displaying, sublicensing, renting, leasing, selling, assigning, or otherwise transferring the Software or Documentation;
+- decompiling, reverse engineering, disassembling, or otherwise attempting to convert the Software into source code form, except as expressly permitted by applicable law;
+- altering or removing any copyright, patent, or other proprietary notices in the Software or Documentation;
+- using the Software or Documentation for any unlawful purpose;
+- using the Software or Documentation in any manner inconsistent with or in violation of this Agreement.
+
+4. Open Source Components
+Certain open source components included in the Software are licensed under the Necokara License 1.0 license, and those components are governed by the Necokara License 1.0 terms. Except for those open source components, the Software as a whole is proprietary software and is protected by this EULA and copyright law.
+
+5. Ownership and Copyright
+The Software and Documentation, including all intellectual property rights embodied therein, are and shall remain the exclusive property of the Software Owner or its licensors. Except as expressly provided in this Agreement, you acquire no right, title, or interest in them.
+
+6. User Content Responsibility
+All content that you create, output, or distribute using the Software (including but not limited to lyric subtitles, video images, and audio materials) must be created by you or lawfully obtained by you. You are solely responsible for the legality, authenticity, and accuracy of such content.
+You must ensure that the content you create and distribute does not violate the laws and regulations of your jurisdiction and does not infringe any third party's intellectual property rights, right of publicity, reputation, privacy, or other legal rights.
+The Software Owner does not review or endorse any content created or distributed by you through the Software. If any dispute, claim, or legal liability arises from your content, you shall handle it independently and bear all consequences. The Software Owner shall not bear any liability.
+
+7. Disclaimer of Warranties
+The Software and Documentation are provided on an "as is" and "as available" basis, without warranties of any kind. The Software Owner disclaims all express, implied, and statutory warranties, including but not limited to implied warranties of merchantability, fitness for a particular purpose, title, and non-infringement. The Software Owner does not warrant that the Software or Documentation will operate continuously or without error, and no warranty is given under trade usage or in the course of dealing. You assume all risks arising from the use of the Software and Documentation. If any jurisdiction does not allow the exclusion of implied warranties, you agree that Section 8 of this Agreement shall apply to the maximum extent permitted in your jurisdiction.
+
+8. Limitation of Liability and Cap on Damages
+Under no circumstances shall the Software Owner or its licensors be liable for any punitive, direct, incidental, indirect, special, or consequential damages (including but not limited to data loss, business interruption, loss of profits, and damage to reputation) arising from the use of or inability to use the Software or Documentation, or from compliance with or failure to comply with this Agreement, even if the Software Owner and its licensors have been advised of the possibility of such damages.
+In no event shall the Software Owner's total liability to you for all damages, losses, and causes of action (whether in contract, tort including negligence, or otherwise) exceed the amount actually paid by you for the Software, if any; if you have paid no fees, the cap shall be USD 100 or the equivalent in local currency.
+You agree to indemnify, defend, and hold harmless the Software Owner and its licensors, directors, officers, employees, affiliates, and agents from and against all losses, damages, liabilities, and other expenses (including reasonable attorneys' fees) arising from your use of the Software or Documentation or your breach of this Agreement.
+
+9. Termination
+This Agreement terminates immediately, without notice from the Software Owner or a court order, if: (1) you fail to comply with any term of this Agreement, or (2) you notify the Software Owner of your intention to terminate this Agreement.
+Upon termination, you must delete or destroy all copies of the Software. After termination or expiration, all provisions of this Agreement survive except for Section 2 (Grant of License).
+
+10. Support, Updates, and Software Changes
+Under this Agreement, the Software Owner has no obligation to provide support of any kind. The Software Owner may, at its sole discretion, provide you with updates to the Software and Documentation. All updates shall be subject to the terms and conditions of this Agreement.
+The Software Owner has the right, at its sole discretion, to change, discontinue, or disable any part or feature of the Software without prior notice.
+
+11. Changes to This Agreement
+The Software Owner may revise or update the terms of this EULA from time to time. The updated agreement will take effect when a new version of the Software is released or when you are notified through software update prompts or other means. If you continue to install or use the Software after the update takes effect, you will be deemed to have read, understood, and accepted the revised agreement. If you do not accept the updated terms, please stop using the Software and uninstall all copies.
+
+12. Governing Law
+This Agreement is governed by and construed in accordance with the laws of your jurisdiction, excluding rules that would cause the application of other laws. Each party submits to the exclusive jurisdiction of the competent courts in your jurisdiction for the resolution of any dispute related to this Agreement. You acknowledge that a breach of this Agreement may cause irreparable harm and agree that the Software Owner is entitled to seek injunctive relief and other remedies available from a court of competent jurisdiction.
+
+13. General
+You may not assign this Agreement without the Software Owner's prior written consent, and any assignment without such consent shall be void.
+The parties do not intend to create any agency or partnership relationship through this Agreement.
+Each provision of this Agreement shall be interpreted in a valid and lawful manner under applicable law. However, if any provision is unenforceable or declared unenforceable by a court of competent jurisdiction, that provision shall be deemed deleted, and the remaining provisions of this Agreement shall remain in full force and effect.
+
+14. Entire Agreement
+This Agreement, together with all applicable supplemental terms, constitutes the entire agreement and understanding between the parties regarding the Software and supersedes and merges all prior oral and written agreements, discussions, and understandings relating to its subject matter.
+No waiver or amendment of any provision of this Agreement shall be binding unless made in writing and signed by the authorized representatives of each party.
+If there is any discrepancy between language versions of this Agreement, the Simplified Chinese version shall prevail.
+
+© 2026 Chrollis (https://github.com/Chrollis)
