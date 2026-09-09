@@ -1,0 +1,12 @@
+[package]
+name = "necokara-lyrics"
+version = "0.1.0"
+description = "Necokara lyrics data structures and reading logic"
+authors = ["Chrollis"]
+edition = "2021"
+
+[dependencies]
+necokara-error = { path = "../necokara-error" }
+regex = "1"
+unic-ucd-category = "0.9.0"
+yeslogic-unicode-script = "1.0.0"
