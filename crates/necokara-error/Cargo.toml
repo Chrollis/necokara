@@ -1,0 +1,6 @@
+[package]
+name = "necokara-error"
+version = "0.1.0"
+description = "Necokara unified error type and error-code constants"
+authors = ["Chrollis"]
+edition = "2021"
