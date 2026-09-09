@@ -1,0 +1,10 @@
+[package]
+name = "necokara-path"
+version = "0.1.0"
+description = "Necokara media path resolution and material management: crl:// url parsing, registry, offline search"
+authors = ["Chrollis"]
+edition = "2021"
+
+[dependencies]
+necokara-error = { path = "../necokara-error" }
+sha2 = "0.10"
