@@ -1,0 +1,11 @@
+[package]
+name = "necokara-timing"
+version = "0.1.0"
+description = "Necokara timing logic: BPM segments and check-to-time interpolation"
+authors = ["Chrollis"]
+edition = "2021"
+
+[dependencies]
+necokara-error = { path = "../necokara-error" }
+necokara-lyrics = { path = "../necokara-lyrics" }
+serde_json = "1"
