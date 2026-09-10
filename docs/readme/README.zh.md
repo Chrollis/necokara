@@ -67,3 +67,18 @@ AI 辅助与依赖详情见 [ACKNOWLEDGMENTS.md](../../ACKNOWLEDGMENTS.md)。
 ## 贡献
 
 提交代码前请阅读 [CONTRIBUTING.md](../../CONTRIBUTING.md)。
+
+## 星标历史
+
+> [!TIP]
+> 如果本项目对您的生活 / 工作产生了帮助，或者您关注本项目的未来发展，请给项目 Star，这是我们维护这个开源项目的动力 <3
+
+<a href="https://www.star-history.com/?repos=chrollis%2Fnecokara&type=date&legend=top-right">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=chrollis/necokara&type=date&theme=dark&legend=top-right" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=chrollis/necokara&type=date&legend=top-right" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=chrollis/necokara&type=date&legend=top-right" />
+ </picture>
+</a>
+
+<div align="center"><i>言之不足，故永歌之</i></div>

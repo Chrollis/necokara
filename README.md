@@ -65,3 +65,18 @@ See [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md) for AI assistance and dependency de
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting code.
+
+## Star History
+
+> [!TIP]
+> If this project has helped you in your life or work, or if you're interested in its future development, please give the project a Star. It's the driving force behind maintaining this open-source project <3
+
+<a href="https://www.star-history.com/?repos=chrollis%2Fnecokara&type=date&legend=top-right">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=chrollis/necokara&type=date&theme=dark&legend=top-right" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=chrollis/necokara&type=date&legend=top-right" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=chrollis/necokara&type=date&legend=top-right" />
+ </picture>
+</a>
+
+<div align="center"><i>If words alone are inadequate, we speak them out in sighs</i></div>
