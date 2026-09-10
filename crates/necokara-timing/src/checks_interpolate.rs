@@ -267,8 +267,8 @@ fn interpolate_word_ruby(
 
     // Extra checks pin ruby segment starts when counts align.
     if seg_count == checks.len() {
-        for i in 1..seg_count {
-            if let Some(Some(t)) = checks.get(i) {
+        for (i, check) in checks.iter().enumerate().take(seg_count).skip(1) {
+            if let Some(t) = check {
                 known[i] = Some(t.ms);
             }
         }

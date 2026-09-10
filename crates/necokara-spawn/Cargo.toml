@@ -1,0 +1,10 @@
+[package]
+name = "necokara-spawn"
+version = "0.1.0"
+description = "Necokara child-process runner: spawn the bundled Python interpreter (and later ffmpeg), feed stdin, parse JSON stdout envelopes"
+authors = ["Chrollis"]
+edition = "2021"
+
+[dependencies]
+necokara-error = { path = "../necokara-error" }
+serde_json = "1"

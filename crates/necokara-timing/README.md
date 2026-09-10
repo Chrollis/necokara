@@ -14,7 +14,9 @@ Turns lyric content + checks into concrete times:
   ruby per-word with anchor pinning (see module docs for the full rule).
 
 Depends on `necokara-lyrics` for the base types (`CkTime`, streams, word
-allocator). Serialization is a separate translation layer.
+allocator) and on `necokara-spawn` for running the bundled helper scripts
+(`align.py` / `separate.py` / `bpm.py` / `ai-languages.py`). Serialization is a
+separate translation layer.
 
 ## Usage sketch
 

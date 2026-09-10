@@ -63,6 +63,13 @@ impl BpmList {
         self.segments.len()
     }
 
+    /// Whether there are no segments. The sentinel is always present after
+    /// [`BpmList::new`], so this only becomes true for a default-constructed
+    /// list.
+    pub fn is_empty(&self) -> bool {
+        self.segments.is_empty()
+    }
+
     /// Insert (or replace) the stretch starting at `start`. A `bpm` of
     /// [`BPM_NONE`] is allowed (explicit "no beat from here").
     pub fn insert(&mut self, start: CkTime, bpm: f64) {

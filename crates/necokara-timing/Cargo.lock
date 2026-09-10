@@ -44,12 +44,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "necokara-spawn"
+version = "0.1.0"
+dependencies = [
+ "necokara-error",
+ "serde_json",
+]
+
+[[package]]
 name = "necokara-timing"
 version = "0.1.0"
 dependencies = [
  "necokara-error",
  "necokara-lyrics",
- "serde_json",
+ "necokara-spawn",
 ]
 
 [[package]]

@@ -1,27 +1,19 @@
 //! Python wrapper for BPM detection (librosa), vocal separation (demucs)
 //! and lyric alignment (stable-ts). Spawns the bundled python interpreter
-//! running the scripts in `python/scripts/`, parses their JSON stdout, and
-//! maps failures onto [`CkError`] with per-site error codes.
+//! running the scripts in `python/scripts/` through `necokara-spawn`, then
+//! maps the returned JSON payload onto the local result types.
+//!
+//! Transport failures (spawn / exit status / envelope) are reported by
+//! `necokara-spawn.*` codes; the payload shapes below only need to fail when
+//! the data itself is malformed.
 
 use std::path::Path;
-use std::process::Command;
 
 use necokara_error::CkError;
 use necokara_lyrics::ck_time::CkTime;
+use necokara_spawn::ProcessInput;
 
 use crate::bpm_list::BpmList;
-
-/// Error codes used by this module.
-pub mod codes {
-    use necokara_error::ck_code;
-
-    /// python interpreter / script path unusable or process could not spawn.
-    pub const SPAWN_FAILED: &str = ck_code!("necokara-timing", separate_align, spawn_failed);
-    /// python exited non-zero or printed no parseable JSON.
-    pub const PYTHON_FAILED: &str = ck_code!("necokara-timing", separate_align, python_failed);
-    /// the script reported `{"ok": false, ...}`.
-    pub const TASK_FAILED: &str = ck_code!("necokara-timing", separate_align, task_failed);
-}
 
 /// Result of one aligned character.
 #[derive(Debug, Clone, PartialEq)]
@@ -41,44 +33,6 @@ pub struct SeparateOutput {
     pub accompaniment_path: std::path::PathBuf,
 }
 
-/// Run a python script to completion, returning its stdout.
-fn run_python(
-    python: &Path,
-    script: &Path,
-    args: &[&str],
-) -> Result<String, CkError> {
-    let output = Command::new(python)
-        .arg(script)
-        .args(args)
-        .output()
-        .map_err(|e| {
-            CkError::new(codes::SPAWN_FAILED, "could not spawn python").with_source(e.to_string())
-        })?;
-
-    if !output.status.success() {
-        let stderr = String::from_utf8_lossy(&output.stderr);
-        return Err(CkError::new(
-            codes::PYTHON_FAILED,
-            "python exited non-zero",
-        )
-        .with_source(stderr.trim()));
-    }
-
-    let stdout = String::from_utf8_lossy(&output.stdout).into_owned();
-    Ok(stdout)
-}
-
-/// Parse the script's `{"ok": ...}` envelope; on `ok` return the raw payload.
-fn parse_payload(stdout: &str) -> Result<serde_json::Value, CkError> {
-    let payload: serde_json::Value = serde_json::from_str(stdout)
-        .map_err(|e| CkError::new(codes::PYTHON_FAILED, "python stdout was not JSON").with_source(e.to_string()))?;
-    if payload.get("ok").and_then(|v| v.as_bool()) != Some(true) {
-        let err = payload.get("error").and_then(|v| v.as_str()).unwrap_or("unknown");
-        return Err(CkError::new(codes::TASK_FAILED, "python task reported failure").with_source(err));
-    }
-    Ok(payload)
-}
-
 /// Separate `src` into vocals + accompaniment wavs.
 ///
 /// Runs `separate.py --src <src> --vocals <vocals> --accompaniment <acc>
@@ -92,18 +46,23 @@ pub fn separate(
     vocals_out: &Path,
     accompaniment_out: &Path,
 ) -> Result<SeparateOutput, CkError> {
-    let stdout = run_python(
+    necokara_spawn::run_python_json(
         python,
         script,
         &[
-            "--src", src.to_str().unwrap_or_default(),
-            "--vocals", vocals_out.to_str().unwrap_or_default(),
-            "--accompaniment", accompaniment_out.to_str().unwrap_or_default(),
-            "--model-dir", model_dir.to_str().unwrap_or_default(),
-            "--ffmpeg", ffmpeg.to_str().unwrap_or_default(),
+            "--src",
+            src.to_str().unwrap_or_default(),
+            "--vocals",
+            vocals_out.to_str().unwrap_or_default(),
+            "--accompaniment",
+            accompaniment_out.to_str().unwrap_or_default(),
+            "--model-dir",
+            model_dir.to_str().unwrap_or_default(),
+            "--ffmpeg",
+            ffmpeg.to_str().unwrap_or_default(),
         ],
+        ProcessInput::None,
     )?;
-    parse_payload(&stdout)?;
     Ok(SeparateOutput {
         vocals_path: vocals_out.to_path_buf(),
         accompaniment_path: accompaniment_out.to_path_buf(),
@@ -125,18 +84,23 @@ pub fn align(
     lyrics: &str,
     lang: &str,
 ) -> Result<Vec<AlignChar>, CkError> {
-    let stdout = run_python(
+    let payload = necokara_spawn::run_python_json(
         python,
         script,
         &[
-            "--vocals", vocals_wav.to_str().unwrap_or_default(),
-            "--lyrics", lyrics,
-            "--lang", lang,
-            "--model-dir", model_dir.to_str().unwrap_or_default(),
-            "--ffmpeg", ffmpeg.to_str().unwrap_or_default(),
+            "--vocals",
+            vocals_wav.to_str().unwrap_or_default(),
+            "--lyrics",
+            lyrics,
+            "--lang",
+            lang,
+            "--model-dir",
+            model_dir.to_str().unwrap_or_default(),
+            "--ffmpeg",
+            ffmpeg.to_str().unwrap_or_default(),
         ],
+        ProcessInput::None,
     )?;
-    let payload = parse_payload(&stdout)?;
 
     let mut chars = Vec::new();
     if let Some(tokens) = payload.get("tokens").and_then(|v| v.as_array()) {
@@ -170,18 +134,23 @@ pub fn bpm_detect(
     window: usize,
     merge_ratio: f64,
 ) -> Result<BpmList, CkError> {
-    let stdout = run_python(
+    let payload = necokara_spawn::run_python_json(
         python,
         script,
         &[
-            "--input", audio.to_str().unwrap_or_default(),
-            "--ffmpeg", ffmpeg.to_str().unwrap_or_default(),
-            "--threshold", &threshold.to_string(),
-            "--window", &window.to_string(),
-            "--merge-ratio", &merge_ratio.to_string(),
+            "--input",
+            audio.to_str().unwrap_or_default(),
+            "--ffmpeg",
+            ffmpeg.to_str().unwrap_or_default(),
+            "--threshold",
+            &threshold.to_string(),
+            "--window",
+            &window.to_string(),
+            "--merge-ratio",
+            &merge_ratio.to_string(),
         ],
+        ProcessInput::None,
     )?;
-    let payload = parse_payload(&stdout)?;
 
     let mut list = BpmList::new();
     if let Some(segs) = payload.get("segments").and_then(|v| v.as_array()) {
@@ -210,12 +179,12 @@ pub fn ai_languages(
     script: &Path,
     model_dir: &Path,
 ) -> Result<Vec<String>, CkError> {
-    let stdout = run_python(
+    let payload = necokara_spawn::run_python_json(
         python,
         script,
         &["--model-dir", model_dir.to_str().unwrap_or_default()],
+        ProcessInput::None,
     )?;
-    let payload = parse_payload(&stdout)?;
 
     let mut codes = Vec::new();
     if let Some(list) = payload.get("languages").and_then(|v| v.as_array()) {
