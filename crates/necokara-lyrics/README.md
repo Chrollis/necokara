@@ -9,14 +9,14 @@ character streams that carry the text being sung and its ruby readings, the
 word allocation that groups streams into words, and the container that ties
 them together.
 
-It does **not** define the on-disk format â€?serialization is a separate
+It does **not** define the on-disk format â€” serialization is a separate
 translation layer. Timing logic and project-level structures live in sibling
 crates (see below).
 
 ## Crate layout
 
 ```
-necokara-lyrics      lyric content: chars, streams, words        â†?this crate
+necokara-lyrics      lyric content: chars, streams, words        â†’ this crate
 necokara-timing   BPM segments, checkâ†’time interpolation      (depends on lrc)
 necokara-project     metadata (descriptive) + settings (logic)   (depends on lyrics + timing)
 ```
@@ -27,7 +27,7 @@ necokara-project     metadata (descriptive) + settings (logic)   (depends on lyr
 |---|---|
 | `ck_char` | `CkChar`: a char wrapper with the four-way split classification (`CharKind`: per-char / per-word / separator / asyllabic) plus Unicode property wrappers (category, script) |
 | `ck_time` | `CkTime`: integer-millisecond time, `CkTimeFormat`, parsing/formatting (`[mm:ss.mmm]` LRC / `[mm:ss:cc]` NKM3) |
-| `stream` | `CharCell { ch, start, duration }` and `CharStream` (the ordered cell list; main and ruby) |
+| `stream` | `CharCell { ch, start, duration }` and `CharStream` (the ordered cell list; main and ruby); `line_ranges()` splits the main stream into lines at `\n` (closed ranges, trailing `\n` included) |
 | `allocator` | `WordSeg` (main/ruby spans + per-main ruby segmentation + checks) and `WordAlloc` (lazy prefix sums, dirty-rebuild) |
 | `lyrics` | `Lyrics { main_stream, ruby_stream, word_allocator }` container + `ok()` consistency checks (last word is a lone `\n`) |
 

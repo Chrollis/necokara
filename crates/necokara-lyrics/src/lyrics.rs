@@ -30,7 +30,7 @@ impl Lyrics {
     ///  - the total main length from the word allocator matches `main_stream`,
     ///    and the total ruby length matches `ruby_stream`;
     ///  - the last word is a single `\n` character (main_len == 1, no ruby),
-    ///    and `main_stream` therefore ends with `\n` 鈥?mirroring the C++
+    ///    and `main_stream` therefore ends with `\n` — mirroring the C++
     ///    reference where the document always ends with a newline.
     pub fn ok(&self) -> bool {
         let words = self.word_allocator.words();
@@ -50,6 +50,14 @@ impl Lyrics {
             Some(cell) => cell.ch == '\n' && cell.is_new_line(),
             None => false,
         }
+    }
+
+    /// Split the main stream into lines (see [`CharStream::line_ranges`]).
+    ///
+    /// Each range is a closed interval over main-stream cell indices and
+    /// includes the line's trailing `\n`.
+    pub fn line_ranges(&self) -> Vec<std::ops::RangeInclusive<usize>> {
+        self.main_stream.line_ranges()
     }
 }
 
@@ -121,5 +129,21 @@ mod tests {
         l.main_stream = CharStream::from_chars("明日"); // no \n
         l.word_allocator = WordAlloc::from_words(vec![WordSeg::with_ruby(2, vec![1, 1])]);
         assert!(!l.ok());
+    }
+
+    #[test]
+    fn line_ranges_delegates_to_main_stream() {
+        let mut l = consistent();
+        // "明日\n" is a single line covering cells 0..=2, including the `\n`.
+        let ranges = l.line_ranges();
+        assert_eq!(ranges.len(), 1);
+        assert_eq!((*ranges[0].start(), *ranges[0].end()), (0, 2));
+
+        // Two lines: "明日\n" + "花\n".
+        l.main_stream = CharStream::from_chars("明日\n花\n");
+        let ranges = l.line_ranges();
+        assert_eq!(ranges.len(), 2);
+        assert_eq!((*ranges[0].start(), *ranges[0].end()), (0, 2));
+        assert_eq!((*ranges[1].start(), *ranges[1].end()), (3, 4));
     }
 }

@@ -124,6 +124,33 @@ impl CharStream {
             cells: self.cells[range].to_vec(),
         }
     }
+
+    /// Split the stream into lines at `\n` cells.
+    ///
+    /// Each returned range is a closed interval `[start, end]` over this
+    /// stream's cell indices and includes the line's trailing `\n`. A final
+    /// line without `\n` ends at the last cell. An empty stream yields no
+    /// lines, and a stream ending in `\n` does not produce an extra empty
+    /// trailing line.
+    pub fn line_ranges(&self) -> Vec<std::ops::RangeInclusive<usize>> {
+        let mut lines = Vec::new();
+        if self.cells.is_empty() {
+            return lines;
+        }
+
+        let mut start = 0usize;
+        for (index, cell) in self.cells.iter().enumerate() {
+            if cell.ch == '\n' {
+                lines.push(start..=index);
+                start = index + 1;
+            }
+        }
+        // Trailing content without a final `\n`.
+        if start < self.cells.len() {
+            lines.push(start..=self.cells.len() - 1);
+        }
+        lines
+    }
 }
 
 impl std::ops::Deref for CharStream {
@@ -142,5 +169,65 @@ impl std::ops::DerefMut for CharStream {
 impl std::fmt::Display for CharStream {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.as_string())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Compare a `Vec<RangeInclusive>` against inclusive `(start, end)` pairs.
+    fn pairs(ranges: Vec<std::ops::RangeInclusive<usize>>) -> Vec<(usize, usize)> {
+        ranges.into_iter().map(|r| (*r.start(), *r.end())).collect()
+    }
+
+    #[test]
+    fn line_ranges_empty() {
+        let stream = CharStream::new();
+        assert!(stream.line_ranges().is_empty());
+    }
+
+    #[test]
+    fn line_ranges_no_newline_is_one_line() {
+        let stream = CharStream::from_chars("abc");
+        assert_eq!(pairs(stream.line_ranges()), vec![(0, 2)]);
+    }
+
+    #[test]
+    fn line_ranges_include_trailing_newline() {
+        // "a\nb\nc" -> cells: a \n b \n c
+        let stream = CharStream::from_chars("a\nb\nc");
+        assert_eq!(pairs(stream.line_ranges()), vec![(0, 1), (2, 3), (4, 4)]);
+    }
+
+    #[test]
+    fn line_ranges_stream_ending_with_newline_has_no_extra_line() {
+        let stream = CharStream::from_chars("a\n");
+        assert_eq!(pairs(stream.line_ranges()), vec![(0, 1)]);
+
+        let only_newline = CharStream::from_chars("\n");
+        assert_eq!(pairs(only_newline.line_ranges()), vec![(0, 0)]);
+    }
+
+    #[test]
+    fn line_ranges_consecutive_newlines_are_empty_lines() {
+        // "\n\n" -> two empty lines, each holding one `\n`.
+        let stream = CharStream::from_chars("\n\n");
+        assert_eq!(pairs(stream.line_ranges()), vec![(0, 0), (1, 1)]);
+    }
+
+    #[test]
+    fn line_ranges_leading_newline() {
+        let stream = CharStream::from_chars("\na");
+        assert_eq!(pairs(stream.line_ranges()), vec![(0, 0), (1, 1)]);
+    }
+
+    #[test]
+    fn line_ranges_start_is_first_cell_of_next_line() {
+        let stream = CharStream::from_chars("ab\ncd");
+        let ranges = stream.line_ranges();
+        assert_eq!(pairs(ranges.clone()), vec![(0, 2), (3, 4)]);
+        // The char after a newline starts the next line.
+        assert_eq!(*ranges[1].start(), 3);
     }
 }

@@ -91,7 +91,7 @@ impl CkChar {
         {
             return CharKind::PerWord;
         }
-        // Everything else (marks, punctuation handled elsewhere, controls鈥?.
+        // Everything else (marks, punctuation handled elsewhere, controls…).
         CharKind::Asyllabic
     }
 

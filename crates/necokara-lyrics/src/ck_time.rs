@@ -81,7 +81,7 @@ pub struct CkTimeFormat {
 }
 
 impl CkTimeFormat {
-    /// `[00:12.345]` 鈥?standard LRC style.
+    /// `[00:12.345]` — standard LRC style.
     pub const fn standard() -> Self {
         Self {
             decimal_point: '.',
@@ -90,7 +90,7 @@ impl CkTimeFormat {
         }
     }
 
-    /// `[00:12:34]` 鈥?NicoKaraMaker3 style (centisecond precision).
+    /// `[00:12:34]` — NicoKaraMaker3 style (centisecond precision).
     pub const fn nicokara() -> Self {
         Self {
             decimal_point: ':',
