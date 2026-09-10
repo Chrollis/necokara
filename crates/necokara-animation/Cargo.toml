@@ -1,0 +1,13 @@
+[package]
+name = "necokara-animation"
+version = "0.1.0"
+description = "Necokara line-level preset animation: sparse keyframes and decor specs consumed by the renderer"
+authors = ["Chrollis"]
+edition = "2021"
+
+[dependencies]
+necokara-error = { path = "../necokara-error" }
+necokara-spawn = { path = "../necokara-spawn" }
+necokara-style = { path = "../necokara-style" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

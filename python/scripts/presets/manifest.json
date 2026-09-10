@@ -1,0 +1,38 @@
+[
+  {
+    "name": {
+      "en_US": "Fade In",
+      "ja_JP": "フェードイン",
+      "zh_CN": "淡入",
+      "zh_TW": "淡入"
+    },
+    "file_name": "FadeIn.py"
+  },
+  {
+    "name": {
+      "en_US": "Fade Out",
+      "ja_JP": "フェードアウト",
+      "zh_CN": "淡出",
+      "zh_TW": "淡出"
+    },
+    "file_name": "FadeOut.py"
+  },
+  {
+    "name": {
+      "en_US": "Fade In/Out",
+      "ja_JP": "フェードイン／アウト",
+      "zh_CN": "淡入淡出",
+      "zh_TW": "淡入淡出"
+    },
+    "file_name": "FadeInOut.py"
+  },
+  {
+    "name": {
+      "en_US": "Per-Character Fade",
+      "ja_JP": "文字単位フェード",
+      "zh_CN": "逐字淡出",
+      "zh_TW": "逐字淡出"
+    },
+    "file_name": "PerCharFade.py"
+  }
+]
