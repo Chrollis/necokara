@@ -1,0 +1,10 @@
+[package]
+name = "necokara-project"
+version = "0.1.0"
+description = "Necokara project-level structures: metadata (descriptive) and settings (computation)"
+authors = ["Chrollis"]
+edition = "2021"
+
+[dependencies]
+necokara-lyrics = { path = "../necokara-lyrics" }
+necokara-timing = { path = "../necokara-timing" }
