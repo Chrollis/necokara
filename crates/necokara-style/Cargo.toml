@@ -1,0 +1,10 @@
+[package]
+name = "necokara-style"
+version = "0.1.0"
+description = "Necokara style definitions and inheritance: character/paragraph/page/ruby styles"
+authors = ["Chrollis"]
+edition = "2021"
+
+[dependencies]
+necokara-error = { path = "../necokara-error" }
+necokara-path = { path = "../necokara-path" }
